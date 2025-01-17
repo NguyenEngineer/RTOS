@@ -1,6 +1,7 @@
-![image](https://github.com/user-attachments/assets/502f8d58-23a4-4726-a1f9-97f563c0db91)# RTOS
+# RTOS
 </details>
 <details><summary> Basic </summary>
+    
 - RTOS - hệ điều hành thời gian thực, sử dụng trong những ứng dụng yêu cầu thời gian đáp ứng nhanh, chính xác về thời gian (freeRTOS, RTX (Keil RTX/MDK-RTOS))
 
 - RTOS khác với các hệ điều hành thông thường trong máy tính như window hay linux.
@@ -42,6 +43,7 @@
         + Cooperative
          Task có độ ưu tiên cao hơn, nhưng Task còn lại cũng không thể chiếm quyền điều khiển của Task 1, mà phải đợi Task 1 làm xong thì mới đến lượt.
          Cơ chế này có thể dùng để tránh việc các task có quyền ưu tiên chiếm hết quyền sử dụng CPU, dẫn đến việc những task nhỏ, có quyền ưu tiên thấp, không được thực hiện
+
 </details>
 <details><summary> Kernel </summary>
 
