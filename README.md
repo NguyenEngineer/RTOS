@@ -45,14 +45,48 @@
          Cơ chế này có thể dùng để tránh việc các task có quyền ưu tiên chiếm hết quyền sử dụng CPU, dẫn đến việc những task nhỏ, có quyền ưu tiên thấp, không được thực hiện
 
 </details>
-<details><summary> Kernel </summary>
+<details><summary> Kernel and Task RTOS </summary>
 
 - Kernel - hay gọi là Nhân của hệ điều hành, thực chất là một quy ước có nhiệm vụ điều phối các công việc của RTOS 
 
         Kernel sẽ điều phối hoạt động của các Task dựa vào bộ lập lịch - Scheduler và các thuật toán lập lịch (do con người quy định). 
         Kernel sẽ quản lý tài nguyên phần cứng - bộ nhớ, để lưu trữ hoạt động của các task. 
         Kernel quản lý các công việc giao tiếp giữa các task, xử lý ngắt, ...
+
+- RTOS cũng sẽ chiếm một phần trong bộ nhớ chương trình (trên FLASH).
+
+- Người ta thường sử dụng vùng nhớ Heap để phân bổ bộ nhớ cho các Task.
+- Trong 1 task có các thành phần:
+   
+       TCB (Task Control Block): dùng để điều khiển 1 task, nhiệm vụ chính là lưu trữ lại các ngữ cảnh đang thực hiện của một task, trước khi chuyển qua task khác.
+   
+       Stack: Mỗi task chạy thì đều cần có vùng nhớ dữ liệu để thực thi, ở đây là vùng stack riêng của từng task, khác với vùng nhớ stack của chương trình.
+
+-  PSP - Process Stack Pointer cho hoạt động của các Task, và MSP - Main Stack Pointer vẫn được sử dụng trong chương trình chính (main).
   
+-  Context Switch - chuyển đổi ngữ cảnh: Khi chuyển từ task này sang task khác, chúng ta cần phải lưu trữ ngữ cảnh của task đang thực hiện và load ngữ cảnh của task sắp thực hiện.
+
+</details>
+<details><summary> Context Switch </summary>
+    
+- Lưu lại ngữ cảnh (dữ liệu) của Task đang thực thi trước khi chuyển qua task khác, ngữ cảnh này sẽ được lưu vào vùng nhớ TCB của Task.
+  
+- Lấy lại ngữ cảnh cũ của Task đang chuẩn bị được thực thi để tiếp tục task đó. Việc này ngược lại với việc trên, đó là lấy dữ liệu từ vùng nhớ TCB của Task tương ứng.
+
+ ![image](https://github.com/user-attachments/assets/29a0fd82-d88d-48b1-8f87-860de78a47ec)
+
+- Việc thực thi Context Switch sẽ dựa trên 2 exceptions của hệ thống, đó là:
+
+        SVC - supervisor call.
+        PendSV Exception.
+
+- Cách lưu trữ ngữ cảnh:
+
+![image](https://github.com/user-attachments/assets/f5d0e0ac-279e-443f-8c02-19cdf3167da8)
+
+    B1: lưu lại giá trị các thanh ghi cần thiết, các thanh ghi tính toán trong Task Control Block (TCB) cần được lưu vào bộ nhớ Stack
+    B2: Cập nhật Process Stack Pointer (PSP) của task mới trước khi chạy task mới
+    B3: Cập nhật ngữ cảnh của Task mới trước khi chạy
 </details>
 <details><summary> LESSION 1 : Task operation </summary>
 
