@@ -92,12 +92,54 @@
 
 </details>
 <details><summary> LESSION 2 : Binary Semaphore </summary>
+- Các Task trong RTOS được coi là độc lập với nhau, tuy nhiên, các tài nguyên chúng sử dụng thì lại không hề độc lập. 
 
+    
+- Chẳng hạn một vi điều khiển một core đang chạy RTOS, nhưng các phần bộ nhớ (RAM, FLASH, các bộ ngoại vi) là dùng chung giữa các task. ==> các task có thể truy cập tài nguyên cùng lúc và gây ra xung đột
+
+- Đồng bộ giữa các task là quan trọng, đặc biệt là khi có những tài nguyên sử dụng chung.
+  
+- Đồng bộ tức là cơ chế giúp cho các task vẫn hoạt động một cách độc lập, nhưng sử dụng một số tài nguyên chung một cách hiệu quả, không bị conflict
+
+- Một vài cơ chế đồng bộ giữa các task thường được sử dụng:
+
+        Semaphore: Sử dụng cho việc đồng bộ hóa tín hiệu và khả năng tận dụng tài nguyên.
+  
+        Event Flag: Chỉ ra một hoặc vài sự kiện đã xảy ra, Event Flag giống như mở rộng của Semaphore, trong đó cho phép đồng bộ hóa trên các sự kiện hỗn hợp.
+  
+        Mailbox, Queue, Pipe: Cơ chế truyền dữ liệu giữa các task.
+  
+- Semaphore hoạt động giống như một chiếc chìa khóa cho việc truy cập tới tài nguyên. Chỉ có task có chìa khóa này mới có quyền sử dụng tài nguyên. 
+
+        Để có thể sử dụng tài nguyên, tác vụ cần yêu cầu chìa khóa để sử dụng - acquire semarphore. 
+        Nếu chìa khóa ở trạng thái sẵn sàng (đang không có task nào sử dụng) thì task yêu cầu có thể sử dụng tài nguyên.
+        Sau khi task dùng xong , task này sẽ phải trả lại chìa khóa - release semaphore để task khác có thể sử dụng.
+  
+![image](https://github.com/user-attachments/assets/3a10ee76-c5d2-47c3-afe4-da6cdc9ab685)
+
+- Semaphore không lưu trữ dữ liệu mà chỉ biểu thị trạng thái của tài nguyên hoặc tín hiệu. Binary Semaphore chỉ có thể ở một trong hai trạng thái:
+  
+        1: Tài nguyên sẵn sàng hoặc task đã hoàn thành.
+        0: Tài nguyên bận hoặc task đang chờ.
+- Binary Semaphore ứng dụng trong việc đồng bộ hóa giữa task và ISR (ví dụ: chờ tín hiệu từ phần cứng), bảo vệ tài nguyên chia sẻ, đảm bảo chỉ một task truy cập tại một thời điểm.
 </details>
 <details><summary> LESSION 3 : Couting Semaphore </summary>
 
 </details>
 <details><summary> LESSION 4 : Queue </summary>
+- Queue trong RTOS là 1 cấu trúc hàng đợi dùng để chia sẻ dữ liệu hoặc giao tiếp với các task khác mà ko bị ảnh hưởng bởi ISR hay task chạy không đồng bộ.
+    
+- Queue truyền an toàn và có trình tự.
+  
+- 2 loại Queue đó là Message Queue và Mail Queue.
+
+- Message Queue thì "Xếp 1 hàng" còn Mail Queue thì "Xếp nhiều hàng"
+  
+- Message Queue:
+![image](https://github.com/user-attachments/assets/7f5524f8-6467-4179-a440-3f2928b2c7b6)
+
+- Mail Queue:
+![image](https://github.com/user-attachments/assets/7eb59509-bd8b-4fe2-9f65-08b2f288677f)
 
 </details>
 <details><summary> LESSION 5 : Structer Queue </summary>
