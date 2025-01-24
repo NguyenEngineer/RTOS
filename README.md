@@ -122,9 +122,12 @@
         1: Tài nguyên sẵn sàng hoặc task đã hoàn thành.
         0: Tài nguyên bận hoặc task đang chờ.
 - Binary Semaphore ứng dụng trong việc đồng bộ hóa giữa task và ISR (ví dụ: chờ tín hiệu từ phần cứng), bảo vệ tài nguyên chia sẻ, đảm bảo chỉ một task truy cập tại một thời điểm.
+
+
+
 </details>
 <details><summary> LESSION 3 : Couting Semaphore </summary>
-
+- Coutinh Semaphore là 
 </details>
 <details><summary> LESSION 4 : Queue </summary>
 - Queue trong RTOS là 1 cấu trúc hàng đợi dùng để chia sẻ dữ liệu hoặc giao tiếp với các task khác mà ko bị ảnh hưởng bởi ISR hay task chạy không đồng bộ.
