@@ -127,7 +127,22 @@
 
 </details>
 <details><summary> LESSION 3 : Couting Semaphore </summary>
-- Coutinh Semaphore là 
+- Couting Semaphore chức năng giống như Binary Semaphore nhưng Couting có thể quản lý nhiều task hơn.
+
+- Counting Semaphore hoạt động giống như một biến đếm. Trạng thái của nó được biểu diễn bằng một giá trị nguyên không âm (thường trong khoảng 0 đến 255).
+  
+- Counting Semaphore thường được sử dụng với 2 mục đích:
+
++ Counting Event - Đếm sự kiện
+   
+        VD: Mỗi lần có sự kiện xảy ra, semaphore sẽ được "give", tăng giá trị đếm.
+            Mỗi lần sự kiện được xử lý, semaphore sẽ được "take", giảm giá trị đếm.
+
++ Resource Management - Quản lý tài nguyên
+
+        VD: Khi một task Acquire (lấy) tài nguyên, giá trị semaphore giảm đi một đơn vị.
+            Khi task Release (trả lại) tài nguyên, giá trị semaphore tăng lên.
+    
 </details>
 <details><summary> LESSION 4 : Queue </summary>
 - Queue trong RTOS là 1 cấu trúc hàng đợi dùng để chia sẻ dữ liệu hoặc giao tiếp với các task khác mà ko bị ảnh hưởng bởi ISR hay task chạy không đồng bộ.
