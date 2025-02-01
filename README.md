@@ -198,9 +198,35 @@ VD:
     - task High chạy trc (lấy lock mutex và unlock)
     
     - Sau đó task Medium thực thi (do ko dùng nên nó ko bị ràng buộc)
-    
+
     - task Low chạy (lấy lock mutex) nhưng trong khi thực thi task low thì task high sẽ wakeup và cố gắn chiếm semaphore nhưng ko đc vì task low chưa unlock
     
     - khác với semaphore do task low chưa unlock mutex (low task đang dùng tài nguyên chung) nên medium task ko thể chiếm quyền đc mà phải chờ
     
     - sau khi low chạy xong (unlock) thì task high lấy mutex (lock mutex), thực thi xong (unlock) rồi task medium ms đc thực thi  
+
+</details>
+<details><summary> Race condition </summary>
+
+- Quy trình thao tác trên thanh ghi (Load-Modify-Store): Khi CPU thực hiện một thao tác thay đổi bit của thanh ghi:
+
+        VD:  Load: Nạp giá trị hiện tại của GPIOB_ODR vào một thanh ghi tạm (ví dụ: R2).
+             Modify: Thay đổi giá trị trong thanh ghi tạm (R2) để điều khiển bit LED.
+             Store: Ghi lại giá trị từ thanh ghi tạm (R2) vào GPIOB_ODR.
+==> Tức là CPU sẽ load giá trị của thanh ghi đó, sau đó chỉnh sửa (Modify), và cuối cùng cùng là Store giá trị trở lại các thanh ghi đó.
+
+- Race condition sảy ra khi trong quá trình (Load-Modify-Store) mà có Ngắt Systick_Handler sảy ra.
+
+      VD: Khi đang thực thi load 1 thanh ghi và chuẩn bị modify thay đổi giá trị thanh ghi (ví dụ = 1) đó.
+          Thì ngắt systick_handlder xảy ra cũng thay đổi giá trị thanh ghi đó ( ví dụ thay đổi giá trị thanh ghi đó  = 2).
+          Và sau đó quay lại hàm main chính và tiếp tục quá trình trước khi ngắt sảy ra.
+          CPU tiếp tục thực hiện Modify và Store với giá trị ban đầu được Load, bỏ qua thay đổi của Systick_Handler.
+    
+      ==> Bị miss data của Ngắt Systick_Handler.
+
+- Cách khắc phục:
+
+        + Sử dụng Mutex (Mutual Exclusion)
+        + Sử dụng Critical Section
+            Critical Section là đoạn mã mà CPU không thể bị gián đoạn khi thực hiện. Bằng cách tắt ngắt (disable interrupt) trong các đoạn mã quan trọng
+        + Binary Semaphore hoặc Counting Semaphore 
