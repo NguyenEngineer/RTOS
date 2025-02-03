@@ -186,7 +186,14 @@ VD:
 ## Mutex
 
 + mutex giúp chỉ 1 task (priotity cao) truy cập được tài nguyên chung tại 1 thời điểm (sử dụng lock và unlock)
-  
+
++ Thực chất nó là một Flag - cờ, hay một Key - khóa, giúp ngăn chặn các lỗi tiềm ẩn như Race Condition.
+
++ Cơ chế hoạt động
+
+        Acquire (Yêu cầu): Một task phải đợi đến khi Mutex "free" để được cấp quyền truy cập.
+        Release (Nhả): Sau khi hoàn thành, task sẽ nhả Mutex để tài nguyên có thể được sử dụng bởi task khác.
+
 + Mutex hỗ trợ cơ chế Priority Inheritance (kế thừa quyền ưu tiên)
 
 + dùng khi để đồng bộ hóa truy cập tài nguyên dùng chung
@@ -204,6 +211,10 @@ VD:
     - khác với semaphore do task low chưa unlock mutex (low task đang dùng tài nguyên chung) nên medium task ko thể chiếm quyền đc mà phải chờ
     
     - sau khi low chạy xong (unlock) thì task high lấy mutex (lock mutex), thực thi xong (unlock) rồi task medium ms đc thực thi  
+
++ Mutex vs Binary Semaphore:
+  
+  ![image](https://github.com/user-attachments/assets/3acc28f3-17da-4489-9403-d386d75f05ee)
 
 </details>
 <details><summary> Race condition </summary>
